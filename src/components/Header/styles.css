@@ -1,0 +1,20 @@
+header { 
+  display: flex;
+  justify-content: space-between;
+  margin: 30px;
+  border-bottom: 1px solid black;
+}
+
+ span {
+  font-size: 40px;
+  margin: 30px;
+}
+
+button {
+  margin: 10px;
+}
+
+img {
+  margin-bottom: 10px;
+}
+
