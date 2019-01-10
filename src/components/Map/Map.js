@@ -52,6 +52,7 @@ class Map extends Component {
         });
       }
     }
+
     this.loadMap();
   }
 
@@ -69,20 +70,24 @@ class Map extends Component {
         zoom,
       };
       this.map = new maps.Map(node, mapConfig);
-      
-      const map = this.map;
-      map.addListener('click', function(e) {
-        placeMarker(e.latLng, map);
+
+      this.map.addListener('click', e => {
+        placeMarker(e.latLng, this.map);
       });
 
-      function placeMarker(position, map) {
+      const placeMarker = (position, map) => {
         new maps.Marker({
           position,
           map,
         });
         map.panTo(position);
-      }
+        this.countDistance(map, position);
+      };
     }
+  }
+
+  countDistance(map, position) {
+    console.log('countDistance', this, map, position);
   }
 
   render() {
@@ -95,7 +100,7 @@ class Map extends Component {
 }
 
 Map.defaultProps = {
-  zoom: 14,
+  zoom: 16,
   // Amst by default
   initialCenter: {
     lat: 52.368,
