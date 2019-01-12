@@ -25,19 +25,6 @@ class Map extends Component {
     }
   }
 
-  recenterMap() {
-    const map = this.map;
-    const curr = this.state.currentLocation;
-
-    const google = this.props.google;
-    const maps = google.maps;
-
-    if (map) {
-      let center = new maps.LatLng(curr.lat, curr.lng);
-      map.panTo(center);
-    }
-  }
-
   componentDidMount() {
     if (this.props.centerAroundCurrentLocation) {
       if (navigator && navigator.geolocation) {
@@ -56,15 +43,27 @@ class Map extends Component {
     this.loadMap();
   }
 
+  recenterMap() {
+    const map = this.map;
+    const curr = this.state.currentLocation;
+
+    const google = this.props.google;
+    const maps = google.maps;
+
+    if (map) {
+      let center = new maps.LatLng(curr.lat, curr.lng);
+      map.panTo(center);
+    }
+  }
+
   loadMap() {
     if (this.props.google) {
       const { maps } = this.props.google;
-      const node = ReactDOM.findDOMNode(this.refs.map);
-
       const { zoom } = this.state;
       const { lat, lng } = this.state.currentLocation;
-
       const center = new maps.LatLng(lat, lng);
+
+      const node = ReactDOM.findDOMNode(this.refs.map);
       const mapConfig = {
         center,
         zoom,
@@ -72,22 +71,40 @@ class Map extends Component {
       this.map = new maps.Map(node, mapConfig);
 
       this.map.addListener('click', e => {
-        placeMarker(e.latLng, this.map);
+        this.placeMarker(e.latLng, this.map);
       });
-
-      const placeMarker = (position, map) => {
-        new maps.Marker({
-          position,
-          map,
-        });
-        map.panTo(position);
-        this.countDistance(map, position);
-      };
     }
   }
 
-  countDistance(map, position) {
-    console.log('countDistance', this, map, position);
+  placeMarker(position, map) {
+    new this.props.google.maps.Marker({
+      position,
+      map,
+    });
+    map.panTo(position);
+    this.countDistance();
+  }
+
+  countDistance() {
+    console.log('countDistance', this, this.map);
+    const { maps } = this.props.google;
+
+    const directionsService = new maps.DirectionsService();
+    const directionsDisplay = new maps.DirectionsRenderer();
+    directionsDisplay.setMap(this.map);
+
+    (() => {
+      let request = {
+        origin: new maps.LatLng(52.368, 4.9036),
+        destination: new maps.LatLng(49.444431, 32.059769),
+        travelMode: 'WALKING',
+      };
+      directionsService.route(request, (result, status) => {
+        if (status === 'OK') {
+          directionsDisplay.setDirections(result);
+        }
+      });
+    })();
   }
 
   render() {
