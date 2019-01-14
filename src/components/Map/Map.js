@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { GoogleApiWrapper } from 'google-maps-react';
+//import { pathsRef } from '../../config/firebase';
 
 class Map extends Component {
   constructor(props) {
@@ -13,6 +14,10 @@ class Map extends Component {
         lat,
         lng,
       },
+      pathsPriority: 0,
+      fromPoint: '',
+      toPoint: '',
+      waypoint: '',
     };
   }
 
@@ -39,6 +44,17 @@ class Map extends Component {
         });
       }
     }
+    //   pathsRef.set({
+    //     John: {
+    //        number: 1,
+    //        age: 30222
+    //     },
+
+    //     Amanda: {
+    //        number: 2,
+    //        age: 20
+    //     }
+    //  });
 
     this.loadMap();
   }
@@ -82,26 +98,64 @@ class Map extends Component {
       map,
     });
     map.panTo(position);
-    this.countDistance();
+    this.countDistance(position);
   }
 
-  countDistance() {
-    console.log('countDistance', this, this.map);
+  countDistance(position) {
+    //let { pathsPriority, fromPoint, toPoint, waypoint } = this.state;
     const { maps } = this.props.google;
+    //console.log('1', this.state.pathsPriority, this.state.fromPoint, this.state.toPoint);
+    this.setState({
+      pathsPriority: this.state.pathsPriority + 1,
+    });
 
     const directionsService = new maps.DirectionsService();
     const directionsDisplay = new maps.DirectionsRenderer();
     directionsDisplay.setMap(this.map);
 
+    if (this.state.pathsPriority === 1) {
+      this.setState({
+        fromPoint: position,
+      });
+    } else if (this.state.pathsPriority === 2) {
+      this.setState({
+        toPoint: position,
+      });
+    } else if (this.state.pathsPriority > 2) {
+      this.setState({
+        waypoint: this.state.toPoint,
+        toPoint: position,
+      });
+    }
+
+    console.log(
+      '1',
+      this.state.pathsPriority,
+      this.state.fromPoint,
+      this.state.toPoint,
+      this.state.waypoint
+    );
     (() => {
       let request = {
-        origin: new maps.LatLng(52.368, 4.9036),
-        destination: new maps.LatLng(49.444431, 32.059769),
+        origin: this.state.fromPoint,
+        destination: this.state.toPoint,
+        waypoints: [
+          {
+            location: this.state.waypoint,
+          },
+          // {
+          //   location: new maps.LatLng(52.368, 5.9036),
+          // },
+        ],
         travelMode: 'WALKING',
       };
       directionsService.route(request, (result, status) => {
         if (status === 'OK') {
           directionsDisplay.setDirections(result);
+          console.log(result.routes[0].legs[0].distance.text);
+          console.log(result.routes[0].legs[0].duration.text);
+          //console.log(result.routes[0].legs[1].distance.text);
+          //console.log(result.routes[0].legs[2].distance.text);
         }
       });
     })();
