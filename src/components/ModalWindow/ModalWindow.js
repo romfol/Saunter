@@ -17,15 +17,12 @@ import { connect } from 'react-redux';
 import { addPath } from '../../actions/index';
 
 class ModalWindow extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
   state = {
     title: '',
     shortDescription: '',
     fullDescription: '',
-    fromPoint: { lat: '', lng: '' },
-    toPoint: { lat: '', lng: '' },
+    fromPoint: '',
+    toPoint: '',
     waypoints: [],
     totalDistance: 0,
   };
@@ -81,8 +78,10 @@ class ModalWindow extends Component {
                       placeholder="Text area"
                     />
                   </FormGroup>
-                  <span>{this.state.totalDistance}</span>
                   <div style={{ textAlign: 'center' }}>
+                    <span style={{ fontSize: '15px', display: 'block' }}>
+                      Length: {this.state.totalDistance} km
+                    </span>
                     <Button type="submit" color="link" style={{ border: '1px solid #eddede' }}>
                       Add path
                     </Button>
@@ -95,8 +94,8 @@ class ModalWindow extends Component {
                 <Map
                   transferRoutesData={(fromPoint, toPoint, waypoints, totalDistance) =>
                     this.setState({
-                      fromPoint: { lat: fromPoint.lat(), lng: fromPoint.lng() },
-                      toPoint: { lat: toPoint.lat(), lng: toPoint.lng() },
+                      fromPoint,
+                      toPoint,
                       waypoints,
                       totalDistance,
                     })

@@ -88,7 +88,6 @@ class Map extends Component {
   }
 
   showRoute(position, map) {
-    console.log(position.lat());
     const { maps } = this.props.google;
     this.setState({
       pathsPriority: this.state.pathsPriority + 1,
@@ -106,20 +105,20 @@ class Map extends Component {
       });
       map.panTo(position);
       this.setState({
-        fromPoint: position,
+        fromPoint: `${position.lat() + ', ' + position.lng()}`,
         firstMarker: marker,
       });
     } else if (pathsPriority === 2) {
       this.setState({
-        toPoint: position,
+        toPoint: `${position.lat() + ', ' + position.lng()}`,
         firstMarker: this.state.firstMarker.setMap(null),
       });
     } else if (pathsPriority > 2) {
       this.setState({
         waypoints: this.state.waypoints.concat({
-          location: `${this.state.toPoint.lat() +','+ this.state.toPoint.lng()}`,
+          location: this.state.toPoint,
         }),
-        toPoint: position,
+        toPoint: `${position.lat() + ', ' + position.lng()}`,
       });
     }
 
@@ -135,13 +134,14 @@ class Map extends Component {
         if (status === 'OK') {
           directionsDisplay.setDirections(result);
           (function countTotalDistance() {
-            let totalDistance = 0;
+            let totalMeters = 0;
             //let totalDuration = 0;
             let legs = result.routes[0].legs;
             for (let i = 0; i < legs.length; ++i) {
-              totalDistance += legs[i].distance.value;
+              totalMeters += legs[i].distance.value;
               //totalDuration += legs[i].duration.value;
             }
+            const totalDistance = totalMeters / 1000;
             that.setState({ totalDistance });
           })();
         }
@@ -177,7 +177,7 @@ Map.propTypes = {
 
 const styles = {
   width: '500px',
-  height: '360px',
+  height: '460px',
 };
 
 export default GoogleApiWrapper({
