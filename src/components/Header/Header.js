@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import img from './walkman.ico';
 
-import { ModalWindow } from '../ModalWindow/ModalWindow';
+import ModalWindow from '../ModalWindow/ModalWindow';
 import './styles.css';
 
 class Header extends Component {

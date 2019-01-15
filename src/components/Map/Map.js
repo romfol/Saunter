@@ -91,7 +91,8 @@ class Map extends Component {
     const directionsDisplay = new maps.DirectionsRenderer();
     directionsDisplay.setMap(this.map);
 
-    if (this.state.pathsPriority === 1) {
+    const { pathsPriority } = this.state;
+    if (pathsPriority === 1) {
       let marker = new maps.Marker({
         position,
         map,
@@ -101,23 +102,26 @@ class Map extends Component {
         fromPoint: position,
         firstMarker: marker,
       });
-    } else if (this.state.pathsPriority === 2) {
+    } else if (pathsPriority === 2) {
       this.setState({
         toPoint: position,
         firstMarker: this.state.firstMarker.setMap(null),
       });
-    } else if (this.state.pathsPriority > 2) {
+    } else if (pathsPriority > 2) {
       this.setState({
         waypoints: this.state.waypoints.concat({ location: this.state.toPoint }),
         toPoint: position,
       });
     }
 
+    const { fromPoint, toPoint, waypoints } = this.state;
+    this.props.transferRoutesData(fromPoint, toPoint, waypoints);
+
     (() => {
       let request = {
-        origin: this.state.fromPoint,
-        destination: this.state.toPoint,
-        waypoints: this.state.waypoints,
+        origin: fromPoint,
+        destination: toPoint,
+        waypoints: waypoints,
         travelMode: 'WALKING',
       };
       directionsService.route(request, (result, status) => {
@@ -131,6 +135,7 @@ class Map extends Component {
               totalDistance += legs[i].distance.value;
               totalDuration += legs[i].duration.value;
             }
+
             console.log(totalDistance);
             console.log(totalDuration / 60, 'min');
           })();

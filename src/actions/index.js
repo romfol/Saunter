@@ -1,8 +1,8 @@
 import { pathsRef } from '../config/firebase';
 import { FETCH_PATHS } from './types';
 
-export const addPath = newToDo => async dispatch => {
-  pathsRef.push().set(newToDo);
+export const addPath = newPath => async dispatch => {
+  pathsRef.push().set(newPath);
 };
 
 export const deletePath = deletePathId => async dispatch => {
