@@ -21,12 +21,13 @@ class ModalWindow extends Component {
   //   super(props);
   // }
   state = {
-    title: 'Text input',
-    shortDescription: 'Text area',
-    fullDescription: 'Text area',
-    fromPoint: '',
-    toPoint: '',
+    title: '',
+    shortDescription: '',
+    fullDescription: '',
+    fromPoint: { lat: '', lng: '' },
+    toPoint: { lat: '', lng: '' },
     waypoints: [],
+    totalDistance: 0,
   };
 
   handleChange = e => {
@@ -39,7 +40,7 @@ class ModalWindow extends Component {
     e.preventDefault();
     console.log(11, this, this.props, this.state);
     this.props.toggle();
-    addPath();
+    this.props.addPath(this.state);
   };
   render() {
     return (
@@ -57,6 +58,7 @@ class ModalWindow extends Component {
                       value={this.state.title}
                       onChange={this.handleChange}
                       name="title"
+                      placeholder="Text input"
                     />
                   </FormGroup>
                   <FormGroup>
@@ -66,6 +68,7 @@ class ModalWindow extends Component {
                       value={this.state.shortDescription}
                       onChange={this.handleChange}
                       name="shortDescription"
+                      placeholder="Text area"
                     />
                   </FormGroup>
                   <FormGroup>
@@ -75,8 +78,10 @@ class ModalWindow extends Component {
                       value={this.state.fullDescription}
                       onChange={this.handleChange}
                       name="fullDescription"
+                      placeholder="Text area"
                     />
                   </FormGroup>
+                  <span>{this.state.totalDistance}</span>
                   <div style={{ textAlign: 'center' }}>
                     <Button type="submit" color="link" style={{ border: '1px solid #eddede' }}>
                       Add path
@@ -88,12 +93,18 @@ class ModalWindow extends Component {
             <Col xs="6">
               <ModalBody>
                 <Map
-                  transferRoutesData={(fromPoint, toPoint, waypoints) =>
-                    this.setState({ fromPoint, toPoint, waypoints })
+                  transferRoutesData={(fromPoint, toPoint, waypoints, totalDistance) =>
+                    this.setState({
+                      fromPoint: { lat: fromPoint.lat(), lng: fromPoint.lng() },
+                      toPoint: { lat: toPoint.lat(), lng: toPoint.lng() },
+                      waypoints,
+                      totalDistance,
+                    })
                   }
                   fromPoint={this.state.fromPoint}
                   toPoint={this.state.toPoint}
                   waypoints={this.state.waypoints}
+                  totalDistance={this.state.totalDistance}
                   style={{ height: '100%' }}
                 />
               </ModalBody>

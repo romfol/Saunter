@@ -18,16 +18,21 @@ class Map extends Component {
       fromPoint: '',
       toPoint: '',
       waypoints: [],
+      totalDistance: undefined,
       firstMarker: undefined,
     };
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { currentLocation, fromPoint, toPoint, waypoints, totalDistance } = this.state;
     if (prevProps.google !== this.props.google) {
       this.loadMap();
     }
-    if (prevState.currentLocation !== this.state.currentLocation) {
+    if (prevState.currentLocation !== currentLocation) {
       this.recenterMap();
+    }
+    if (prevState.totalDistance !== totalDistance) {
+      this.props.transferRoutesData(fromPoint, toPoint, waypoints, totalDistance);
     }
   }
 
@@ -77,11 +82,13 @@ class Map extends Component {
 
       this.map.addListener('click', e => {
         this.showRoute(e.latLng, this.map);
+        console.log(e);
       });
     }
   }
 
   showRoute(position, map) {
+    console.log(position.lat());
     const { maps } = this.props.google;
     this.setState({
       pathsPriority: this.state.pathsPriority + 1,
@@ -109,19 +116,19 @@ class Map extends Component {
       });
     } else if (pathsPriority > 2) {
       this.setState({
-        waypoints: this.state.waypoints.concat({ location: this.state.toPoint }),
+        waypoints: this.state.waypoints.concat({
+          location: `${this.state.toPoint.lat() +','+ this.state.toPoint.lng()}`,
+        }),
         toPoint: position,
       });
     }
 
-    const { fromPoint, toPoint, waypoints } = this.state;
-    this.props.transferRoutesData(fromPoint, toPoint, waypoints);
-
+    let that = this;
     (() => {
       let request = {
-        origin: fromPoint,
-        destination: toPoint,
-        waypoints: waypoints,
+        origin: this.state.fromPoint,
+        destination: this.state.toPoint,
+        waypoints: this.state.waypoints,
         travelMode: 'WALKING',
       };
       directionsService.route(request, (result, status) => {
@@ -129,15 +136,13 @@ class Map extends Component {
           directionsDisplay.setDirections(result);
           (function countTotalDistance() {
             let totalDistance = 0;
-            let totalDuration = 0;
+            //let totalDuration = 0;
             let legs = result.routes[0].legs;
             for (let i = 0; i < legs.length; ++i) {
               totalDistance += legs[i].distance.value;
-              totalDuration += legs[i].duration.value;
+              //totalDuration += legs[i].duration.value;
             }
-
-            console.log(totalDistance);
-            console.log(totalDuration / 60, 'min');
+            that.setState({ totalDistance });
           })();
         }
       });
