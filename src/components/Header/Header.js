@@ -1,23 +1,15 @@
 import React, { Component } from 'react';
+import { Button } from 'reactstrap';
 import img from './walkman.ico';
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from 'reactstrap';
+
+import { ModalWindow } from '../ModalWindow/ModalWindow';
 import './styles.css';
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false,
+      modal: true,
     };
   }
 
@@ -38,30 +30,7 @@ class Header extends Component {
         <Button onClick={this.toggleModal} color="primary" size="lg">
           Add Path
         </Button>
-        <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
-          <ModalHeader toggle={this.toggleModal}>Add new path</ModalHeader>
-          <ModalBody>
-            <Form>
-              <FormGroup>
-                <Label for="title">Title </Label>
-                <Input type="text" name="title" id="shortDesc" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="shortDescr">Short description</Label>
-                <Input type="textarea" name="shortDescription" id="shortDesc" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="fullDescr">Full description</Label>
-                <Input type="textarea" name="fullDescription" id="fullDescr" />
-              </FormGroup>
-            </Form>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.toggleModal}>
-              Do Something
-            </Button>
-          </ModalFooter>
-        </Modal>
+        <ModalWindow modal={this.state.modal} toggle={this.toggleModal} />
       </header>
     );
   }

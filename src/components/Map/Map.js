@@ -125,11 +125,14 @@ class Map extends Component {
           directionsDisplay.setDirections(result);
           (function countTotalDistance() {
             let totalDistance = 0;
+            let totalDuration = 0;
             let legs = result.routes[0].legs;
             for (let i = 0; i < legs.length; ++i) {
               totalDistance += legs[i].distance.value;
+              totalDuration += legs[i].duration.value;
             }
             console.log(totalDistance);
+            console.log(totalDuration / 60, 'min');
           })();
         }
       });
@@ -138,7 +141,7 @@ class Map extends Component {
 
   render() {
     return (
-      <div ref="map" style={styles}>
+      <div ref="map" style={styles} className={'fofooo'}>
         Loading...
       </div>
     );
@@ -163,8 +166,8 @@ Map.propTypes = {
 };
 
 const styles = {
-  width: '100vw',
-  height: '100vh',
+  width: '500px',
+  height: '360px',
 };
 
 export default GoogleApiWrapper({
