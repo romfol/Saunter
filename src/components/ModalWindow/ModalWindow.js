@@ -12,6 +12,7 @@ import {
   Row,
   Col,
 } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Map from '../Map/Map';
 import { connect } from 'react-redux';
 import { addPath } from '../../actions/index';
@@ -79,10 +80,18 @@ class ModalWindow extends Component {
                     />
                   </FormGroup>
                   <div style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: '15px', display: 'block' }}>
+                    <span style={{ fontSize: '25px', display: 'block' }}>
+                      <FontAwesomeIcon
+                        icon="route"
+                        style={{ marginRight: '15px', color: '#73B9FF' }}
+                      />
                       Length: {this.state.totalDistance} km
                     </span>
-                    <Button type="submit" color="link" style={{ border: '1px solid #eddede' }}>
+                    <Button type="submit" outline color="success">
+                      <FontAwesomeIcon
+                        icon="check"
+                        style={{ marginRight: '10px', color: 'green' }}
+                      />
                       Add path
                     </Button>
                   </div>

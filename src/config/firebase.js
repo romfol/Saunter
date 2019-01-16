@@ -4,5 +4,5 @@ import { FirebaseConfig } from './keys';
 
 firebase.initializeApp(FirebaseConfig);
 
-export const pathsRef = firebase.database().ref('paths/');
-//export const pathsRef = databaseRef.child('paths');
+const databaseRef = firebase.database().ref();
+export const pathsRef = databaseRef.child('paths');

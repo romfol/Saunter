@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { GoogleApiWrapper } from 'google-maps-react';
-//import { pathsRef } from '../../config/firebase';
 
 class Map extends Component {
   constructor(props) {
@@ -82,7 +81,6 @@ class Map extends Component {
 
       this.map.addListener('click', e => {
         this.showRoute(e.latLng, this.map);
-        console.log(e);
       });
     }
   }

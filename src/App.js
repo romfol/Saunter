@@ -3,10 +3,14 @@ import { Container, Row, Col } from 'reactstrap';
 import { Header } from './components/Header/Header';
 import PathsList from './components/PathsList/PathsList';
 import PathData from './components/PathData/PathData';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faMapMarkedAlt, faRoute, faCheck } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faMapMarkedAlt, faRoute, faCheck); //icon added
 
 const App = () => {
   return (
-    <React.Fragment>
+    <>
       <Header />
       <Container>
         <Row>
@@ -18,7 +22,7 @@ const App = () => {
           </Col>
         </Row>
       </Container>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -20,7 +20,6 @@ class Header extends Component {
   };
 
   render() {
-    console.log(this.state.modal);
     return (
       <header>
         <div>
