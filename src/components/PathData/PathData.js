@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
 import ShowPath from '../ShowPath/ShowPath';
-import { deletePath } from '../../actions';
+import { deletePath, addToFavourites } from '../../actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './styles.css';
 
@@ -10,7 +10,7 @@ class PathData extends Component {
   state = { deleted: false }; //for rerender
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.transfered !== this.props.transfered) {
+    if (prevProps.transfered.id !== this.props.transfered.id) {
       this.setState({ deleted: false });
     }
   }
@@ -23,6 +23,7 @@ class PathData extends Component {
 
   render() {
     const path = this.props.transfered;
+
     if (!path.title || this.state.deleted) {
       return (
         <div style={{ marginTop: '30px', textAlign: 'center' }}>
@@ -57,12 +58,25 @@ class PathData extends Component {
           </div>
           <div style={{ marginBottom: '20px', wordWrap: 'break-word' }}>{path.description}</div>
           <ShowPath from={path.from} to={path.to} waypoints={path.waypoints} />
-          <Button onClick={() => this.handleDeletePath(path.key)} color="link">
-            Add to favourites
-          </Button>
-          <Button onClick={() => this.handleDeletePath(path.key)} outline color="danger">
-            Remove
-          </Button>
+          <div style={{ textAlign: 'right' }}>
+            <Button
+              className="removeButt"
+              onClick={() => this.props.addToFavourites(path.id)}
+              color="link"
+            >
+              Add to favourites
+              {/* <FontAwesomeIcon
+                icon="thumbs-up"
+                size="2x"
+                style={{ color: '#0056BC', paddingLeft: '3px' }}
+              /> */}
+            </Button>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <Button onClick={() => this.handleDeletePath(path.id)} outline color="danger">
+              Remove
+            </Button>
+          </div>
         </div>
       );
   }
@@ -74,5 +88,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deletePath }
+  { deletePath, addToFavourites }
 )(PathData);

@@ -11,9 +11,20 @@ import {
   faWalking,
   faArrowCircleRight,
   faLongArrowAltLeft,
+  faThumbsUp,
+  faStar,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faMapMarkedAlt, faRoute, faCheck, faWalking, faArrowCircleRight, faLongArrowAltLeft); //icon added
+library.add(
+  faMapMarkedAlt,
+  faRoute,
+  faCheck,
+  faWalking,
+  faArrowCircleRight,
+  faLongArrowAltLeft,
+  faThumbsUp,
+  faStar
+); //icons added
 
 const App = () => {
   return (

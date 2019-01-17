@@ -10,24 +10,32 @@ class PathsList extends Component {
     this.props.fetchPaths();
   }
 
-  transferData(key, title, distance, description, from, to, waypoints) {
-    this.props.transferSelectedData(key, title, distance, description, from, to, waypoints);
+  transferData(id, title, distance, description, from, to, waypoints) {
+    this.props.transferSelectedData(id, title, distance, description, from, to, waypoints);
   }
 
   render() {
     const data = this.props.data;
+    //const favs = this.props.favourites.favourites;
 
     if (data === null) {
       return <span>No data</span>;
     }
+    console.log(this.props.favourites.favourites[0]);
 
-    const dataList = Object.keys(data).map(key => {
-      let path = data[key];
+    const dataList = Object.keys(data).map(id => {
+      let path = data[id];
+
+      // let favClass = 'fave';
+      // if (favs.includes(id)) {
+      //   favClass += 'not-fave';
+      // } else favClass = 'fave';
+
       return (
         <li
           onClick={() =>
             this.transferData(
-              key,
+              id,
               path.title,
               path.totalDistance,
               path.fullDescription,
@@ -36,15 +44,18 @@ class PathsList extends Component {
               path.waypoints
             )
           }
-          key={key}
+          key={id}
         >
-          <Alert color="success" style={{ padding: '10px 0 5px 0' }}>
+          <Alert color="success" style={{ padding: '10px 0 5px ' }}>
             <Container>
               <Row>
+                <Col xs="1">
+                  <FontAwesomeIcon icon="star" size="1x" style={{ color: 'gold' }} />
+                </Col>
                 <Col xs="2">
                   <FontAwesomeIcon icon="map-marked-alt" size="2x" style={{ color: 'grey' }} />
                 </Col>
-                <Col xs="3" className="title">
+                <Col xs="2" className="title">
                   {path.title.toUpperCase()}
                 </Col>
                 <Col xs="4" className="shortDesc">
@@ -72,7 +83,7 @@ class PathsList extends Component {
   }
 }
 
-const mapStateToProps = state => ({ data: state.data });
+const mapStateToProps = state => ({ data: state.data, favourites: state.favourites });
 
 export default connect(
   mapStateToProps,

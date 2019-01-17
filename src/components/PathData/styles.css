@@ -1,0 +1,9 @@
+.removeButt:active {
+  position: relative;
+  top: 10px;
+  color: white;
+  font: 900;
+  background-color: green
+}
+
+/* style={{ textAlign: 'right', position: 'absolute' }} */
