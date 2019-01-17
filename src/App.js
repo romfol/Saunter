@@ -10,9 +10,10 @@ import {
   faCheck,
   faWalking,
   faArrowCircleRight,
+  faLongArrowAltLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faMapMarkedAlt, faRoute, faCheck, faWalking, faArrowCircleRight); //icon added
+library.add(faMapMarkedAlt, faRoute, faCheck, faWalking, faArrowCircleRight, faLongArrowAltLeft); //icon added
 
 const App = () => {
   return (
@@ -23,7 +24,7 @@ const App = () => {
           <Col xs="12" lg="6">
             <PathsList />
           </Col>
-          <Col xs="12" lg="6">
+          <Col xs="12" lg="6" style={{ borderLeft: '1px solid grey' }}>
             <PathData />
           </Col>
         </Row>

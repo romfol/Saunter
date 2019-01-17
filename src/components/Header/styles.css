@@ -2,7 +2,7 @@ header {
   display: flex;
   justify-content: space-between;
   margin: 30px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid grey;
 }
 
  span {

@@ -14,7 +14,6 @@ class ShowPath extends Component {
   }
 
   showPath() {
-    console.log(this.props);
     const { from, to, waypoints } = this.props;
     const { maps } = this.props.google;
     const node = ReactDOM.findDOMNode(this.refs.showPath);

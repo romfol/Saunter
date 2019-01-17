@@ -139,7 +139,8 @@ class Map extends Component {
               totalMeters += legs[i].distance.value;
               //totalDuration += legs[i].duration.value;
             }
-            const totalDistance = totalMeters / 1000;
+            const totalDistance = Math.floor((totalMeters / 1000) * 100) / 100;
+
             that.setState({ totalDistance });
           })();
         }

@@ -1,17 +1,17 @@
 import { pathsRef } from '../config/firebase';
 import { FETCH_PATHS, TRANSFER } from './types';
 
-export const transferSelectedData = (title, distance, description, from, to, waypoints) => ({
+export const transferSelectedData = (key, title, distance, description, from, to, waypoints) => ({
   type: TRANSFER,
-  payload: { title, distance, description, from, to, waypoints, transfered: true },
+  payload: { key, title, distance, description, from, to, waypoints, transfered: true },
 });
 
 export const addPath = newPath => async dispatch => {
   pathsRef.push().set(newPath);
 };
 
-export const deletePath = deletePathId => async dispatch => {
-  pathsRef.child(deletePathId).remove();
+export const deletePath = pathId => async dispatch => {
+  pathsRef.child(pathId).remove();
 };
 
 export const fetchPaths = () => async dispatch => {

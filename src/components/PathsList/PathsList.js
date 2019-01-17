@@ -9,22 +9,25 @@ class PathsList extends Component {
   componentDidMount() {
     this.props.fetchPaths();
   }
-  passData = title => {
-    console.log(title);
-  };
 
-  transferData(title, distance, description, from, to, waypoints) {
-    this.props.transferSelectedData(title, distance, description, from, to, waypoints);
+  transferData(key, title, distance, description, from, to, waypoints) {
+    this.props.transferSelectedData(key, title, distance, description, from, to, waypoints);
   }
 
   render() {
     const data = this.props.data;
+
+    if (data === null) {
+      return <span>No data</span>;
+    }
+
     const dataList = Object.keys(data).map(key => {
       let path = data[key];
       return (
         <li
           onClick={() =>
             this.transferData(
+              key,
               path.title,
               path.totalDistance,
               path.fullDescription,
@@ -44,10 +47,10 @@ class PathsList extends Component {
                 <Col xs="3" className="title">
                   {path.title.toUpperCase()}
                 </Col>
-                <Col xs="5" className="shortDesc">
+                <Col xs="4" className="shortDesc">
                   {path.shortDescription}
                 </Col>
-                <Col xs="1" style={{ fontSize: '15px', padding: '0' }}>
+                <Col xs="2" style={{ fontSize: '15px', padding: '0' }}>
                   {path.totalDistance} km
                 </Col>
                 <Col xs="1" style={{ padding: '5px' }}>
@@ -69,9 +72,7 @@ class PathsList extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  data: state.data,
-});
+const mapStateToProps = state => ({ data: state.data });
 
 export default connect(
   mapStateToProps,

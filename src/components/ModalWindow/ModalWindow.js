@@ -11,6 +11,7 @@ import {
   Container,
   Row,
   Col,
+  FormText,
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Map from '../Map/Map';
@@ -36,7 +37,6 @@ class ModalWindow extends Component {
 
   submitForm = e => {
     e.preventDefault();
-    console.log(11, this, this.props, this.state);
     this.props.toggle();
     this.props.addPath(this.state);
   };
@@ -58,7 +58,12 @@ class ModalWindow extends Component {
                       name="title"
                       placeholder="Text input"
                       id="title"
+                      maxLength="15"
+                      required
                     />
+                    <FormText color="muted" style={{ textAlign: 'right' }}>
+                      Must be filled
+                    </FormText>
                   </FormGroup>
                   <FormGroup>
                     <Label for="shortDescr">Short description</Label>
@@ -69,7 +74,11 @@ class ModalWindow extends Component {
                       name="shortDescription"
                       placeholder="Text area"
                       id="shortDescr"
+                      maxLength="160"
                     />
+                    <FormText color="muted" style={{ textAlign: 'right' }}>
+                      Limit {this.state.shortDescription.length} of 160
+                    </FormText>
                   </FormGroup>
                   <FormGroup>
                     <Label for="fullDescr">Full description</Label>
@@ -116,7 +125,6 @@ class ModalWindow extends Component {
                   toPoint={this.state.toPoint}
                   waypoints={this.state.waypoints}
                   totalDistance={this.state.totalDistance}
-                  style={{ height: '100%' }}
                 />
               </ModalBody>
             </Col>
