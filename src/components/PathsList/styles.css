@@ -1,0 +1,25 @@
+.alert-success:active {
+  top: 5px;
+  background-color: cyan
+}
+
+.title {
+  color: black;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 0;
+  word-wrap: break-word;               
+}
+
+.shortDesc {
+  font-Size: 10px;
+  word-wrap: break-word;
+  color: black;
+}
+
+.liContainer {
+  overflow-y: auto;
+  height: 500px;
+  list-style-type: none;
+  padding: 0;
+}

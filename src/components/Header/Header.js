@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import img from './walkman.ico';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import ModalWindow from '../ModalWindow/ModalWindow';
 import './styles.css';
@@ -23,7 +23,8 @@ class Header extends Component {
     return (
       <header>
         <div>
-          <img src={img} alt="logo" />
+          <FontAwesomeIcon icon="walking" size="3x" />
+
           <span>Saunter</span>
         </div>
         <Button onClick={this.toggleModal} color="primary" size="lg">

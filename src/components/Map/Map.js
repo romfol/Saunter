@@ -149,7 +149,7 @@ class Map extends Component {
 
   render() {
     return (
-      <div ref="map" style={styles} className={'fofooo'}>
+      <div ref="map" style={{ width: '500px', height: '460px' }}>
         Loading...
       </div>
     );
@@ -171,11 +171,6 @@ Map.propTypes = {
   zoom: PropTypes.number,
   initialCenter: PropTypes.object,
   centerAroundCurrentLocation: PropTypes.bool,
-};
-
-const styles = {
-  width: '500px',
-  height: '460px',
 };
 
 export default GoogleApiWrapper({

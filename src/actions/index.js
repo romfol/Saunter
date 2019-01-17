@@ -1,5 +1,10 @@
 import { pathsRef } from '../config/firebase';
-import { FETCH_PATHS } from './types';
+import { FETCH_PATHS, TRANSFER } from './types';
+
+export const transferSelectedData = (title, distance, description, from, to, waypoints) => ({
+  type: TRANSFER,
+  payload: { title, distance, description, from, to, waypoints, transfered: true },
+});
 
 export const addPath = newPath => async dispatch => {
   pathsRef.push().set(newPath);

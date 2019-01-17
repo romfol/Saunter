@@ -46,7 +46,7 @@ class ModalWindow extends Component {
         <Container>
           <ModalHeader toggle={this.props.toggle}>Add new path</ModalHeader>
           <Row>
-            <Col xs="6">
+            <Col xs="12" lg="6">
               <ModalBody style={{ borderRight: '1px solid #eddede' }}>
                 <Form onSubmit={this.submitForm}>
                   <FormGroup>
@@ -57,6 +57,7 @@ class ModalWindow extends Component {
                       onChange={this.handleChange}
                       name="title"
                       placeholder="Text input"
+                      id="title"
                     />
                   </FormGroup>
                   <FormGroup>
@@ -67,6 +68,7 @@ class ModalWindow extends Component {
                       onChange={this.handleChange}
                       name="shortDescription"
                       placeholder="Text area"
+                      id="shortDescr"
                     />
                   </FormGroup>
                   <FormGroup>
@@ -77,6 +79,7 @@ class ModalWindow extends Component {
                       onChange={this.handleChange}
                       name="fullDescription"
                       placeholder="Text area"
+                      id="fullDescr"
                     />
                   </FormGroup>
                   <div style={{ textAlign: 'center' }}>
@@ -98,7 +101,7 @@ class ModalWindow extends Component {
                 </Form>
               </ModalBody>
             </Col>
-            <Col xs="6">
+            <Col xs="12" lg="6">
               <ModalBody>
                 <Map
                   transferRoutesData={(fromPoint, toPoint, waypoints, totalDistance) =>
