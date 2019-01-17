@@ -8,11 +8,12 @@
   font-weight: bold;
   font-size: 15px;
   padding: 0;
-  word-wrap: break-word;               
+  word-wrap: break-word; 
+                
 }
 
 .shortDesc {
-  font-Size: 10px;
+  font-size: 10px;
   word-wrap: break-word;
   color: black;
 }
@@ -24,3 +25,12 @@
   padding: 0;
 }
 
+.fave {
+  color : gold;
+  margin-right: 20px
+  
+}
+
+.not-fave {
+  display: none
+}

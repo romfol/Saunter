@@ -1,5 +1,5 @@
-import { pathsRef } from '../config/firebase';
-import { FETCH_PATHS, TRANSFER, ADD_FAV } from './types';
+import { pathsRef, database, favsRef } from '../config/firebase';
+import { FETCH_PATHS, TRANSFER, FETCH_FAVS } from './types';
 
 export const transferSelectedData = (id, title, distance, description, from, to, waypoints) => ({
   type: TRANSFER,
@@ -10,13 +10,12 @@ export const addPath = newPath => async dispatch => {
   pathsRef.push().set(newPath);
 };
 
-export const addToFavourites = id => ({ type: ADD_FAV, payload: id });
-
-// const dd = database.ref(`paths/${id}`);    works
-// dd.update({
-//   favourite: true,
-// });
-// return { type: ADD_FAV, payload: id };
+export const addToFavourites = id => async dispatch => {
+  const fav = database.ref(`favourite/${id}`);
+  fav.update({
+    id,
+  });
+};
 
 export const deletePath = id => async dispatch => {
   pathsRef.child(id).remove();
@@ -26,6 +25,15 @@ export const fetchPaths = () => async dispatch => {
   pathsRef.on('value', snapshot => {
     dispatch({
       type: FETCH_PATHS,
+      payload: snapshot.val(),
+    });
+  });
+};
+
+export const fetchFavs = () => async dispatch => {
+  favsRef.on('value', snapshot => {
+    dispatch({
+      type: FETCH_FAVS,
       payload: snapshot.val(),
     });
   });

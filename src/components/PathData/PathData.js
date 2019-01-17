@@ -60,7 +60,7 @@ class PathData extends Component {
           <ShowPath from={path.from} to={path.to} waypoints={path.waypoints} />
           <div style={{ textAlign: 'right' }}>
             <Button
-              className="removeButt"
+              className="addFav"
               onClick={() => this.props.addToFavourites(path.id)}
               color="link"
             >

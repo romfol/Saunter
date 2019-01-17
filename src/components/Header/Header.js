@@ -27,7 +27,7 @@ class Header extends Component {
 
           <span>Saunter</span>
         </div>
-        <Button onClick={this.toggleModal} color="primary" size="lg">
+        <Button onClick={this.toggleModal} color="success" size="lg">
           Add Path
         </Button>
         <ModalWindow modal={this.state.modal} toggle={this.toggleModal} />
