@@ -13,6 +13,7 @@ import {
   faLongArrowAltLeft,
   faThumbsUp,
   faStar,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -23,7 +24,8 @@ library.add(
   faArrowCircleRight,
   faLongArrowAltLeft,
   faThumbsUp,
-  faStar
+  faStar,
+  faSearch
 ); //icons added
 
 const App = () => {

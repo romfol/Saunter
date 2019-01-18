@@ -9,7 +9,7 @@
   font-size: 15px;
   padding: 0;
   word-wrap: break-word; 
-                
+  margin-bottom: 5px;
 }
 
 .shortDesc {
@@ -27,7 +27,7 @@
 
 .fave {
   color : gold;
-  margin-right: 20px
+  margin-right: 10px
   
 }
 

@@ -39,7 +39,14 @@ class ModalWindow extends Component {
     e.preventDefault();
     this.props.toggle();
     this.props.addPath(this.state);
+    this.setState({
+      title: '',
+      shortDescription: '',
+      fullDescription: '',
+      totalDistance: 0,
+    });
   };
+
   render() {
     return (
       <Modal isOpen={this.props.modal} toggle={this.props.toggle} size="xl">

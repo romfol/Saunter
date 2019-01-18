@@ -47,7 +47,7 @@ class ShowPath extends Component {
 
   render() {
     return (
-      <div ref="showPath" style={{ width: '540px', height: '480px' }}>
+      <div ref="showPath" style={{ height: '100vh' }}>
         Loading...
       </div>
     );

@@ -6,32 +6,57 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './styles.css';
 
 class PathsList extends Component {
+  state = {
+    data: {},
+    filtered: {},
+  };
+
   componentDidMount() {
     this.props.fetchPaths();
+    this.setState({ data: this.props.data });
+    console.log(this.props.data);
     this.props.fetchFavs();
   }
+
+  static getDerivedStateFromProps = props => ({
+    data: props.data,
+  });
 
   transferData(id, title, distance, description, from, to, waypoints) {
     this.props.transferSelectedData(id, title, distance, description, from, to, waypoints);
   }
 
-  render() {
-    const data = this.props.data;
-    const favs = this.props.favourites;
-    console.log(favs);
+  handleChande = e => {
+    if (e.target.value !== '') {
+      console.log(this.state);
+      const currentData = this.state.data;
+      const filteredData = Object.keys(currentData).map(id => {
+        const path = currentData[id];
+        Object.keys(path).filter(id => {
+          if (id == 'title' || id == 'fullDescription') {
+            const pathData = path[id];
+            console.log(pathData);
+          }
+        });
+      });
+    }
+  };
 
+  render() {
+    const data = this.state.data;
+    const favs = this.props.favourites;
+    console.log('data to list: ', data);
     if (data === null) {
       return <span>No data</span>;
     }
-    //console.log(data);
 
     const dataList = Object.keys(data).map(id => {
-      let path = data[id];
+      const path = data[id];
 
-      let favClass = 'not-fave';
-      if (Object.keys(favs).includes(id)) {
-        favClass = 'fave';
-      } else favClass = 'not-fave';
+      let favClass = 'fave';
+      if (favs === null || !Object.keys(favs).includes(id)) {
+        favClass = 'not-fave';
+      } else favClass = 'fave';
 
       return (
         <li
@@ -62,7 +87,6 @@ class PathsList extends Component {
                   </div>
                   <div className="shortDesc">{path.shortDescription}</div>
                 </Col>
-
                 <Col xs="2" style={{ fontSize: '15px', padding: '0' }}>
                   {path.totalDistance} km
                 </Col>
@@ -82,7 +106,14 @@ class PathsList extends Component {
 
     return (
       <>
-        <Input type="text" name="title" placeholder="Search..." style={{ marginBottom: '15px' }} />
+        <Input
+          type="text"
+          name="title"
+          placeholder="Search..."
+          onChange={this.handleChande}
+          style={{ marginBottom: '15px' }}
+        />
+        {/* <FontAwesomeIcon icon="search" size="1x" /> */}
         <ul className="liContainer">{dataList}</ul>
       </>
     );
