@@ -106,7 +106,7 @@ class ModalWindow extends Component {
                       />
                       Length: {this.state.totalDistance} km
                     </span>
-                    <Button type="submit" outline color="success">
+                    <Button type="submit" outline color="success" style={{ margin: '10px' }}>
                       <FontAwesomeIcon
                         icon="check"
                         style={{ marginRight: '10px', color: 'green' }}

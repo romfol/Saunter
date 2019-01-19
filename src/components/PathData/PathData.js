@@ -32,7 +32,7 @@ class PathData extends Component {
             size="4x"
             style={{ color: 'green', position: 'absolute', top: '30px' }}
           />
-          <span style={{ position: 'relative', left: '60px' }}>Select path </span>
+          <span style={{ fontSize: '40px', position: 'relative', left: '60px' }}>Select path </span>
         </div>
       );
     } else

@@ -14,7 +14,6 @@ class PathsList extends Component {
   componentDidMount() {
     this.props.fetchPaths();
     this.setState({ data: this.props.data });
-    console.log(this.props.data);
     this.props.fetchFavs();
   }
 
@@ -26,19 +25,25 @@ class PathsList extends Component {
     this.props.transferSelectedData(id, title, distance, description, from, to, waypoints);
   }
 
-  handleChande = e => {
+  handleChange = e => {
     if (e.target.value !== '') {
-      console.log(this.state);
       const currentData = this.state.data;
-      const filteredData = Object.keys(currentData).map(id => {
+      const filteredData = Object.keys(currentData).filter(id => {
         const path = currentData[id];
-        Object.keys(path).filter(id => {
-          if (id == 'title' || id == 'fullDescription') {
+        const innerfilteredData = Object.keys(path).filter(id => {
+          if (id === 'title' || id === 'fullDescription') {
             const pathData = path[id];
             console.log(pathData);
+            const lc = pathData.toLowerCase();
+            const filter = e.target.value.toLowerCase();
+            console.log(lc.includes(filter));
+            return lc.includes(filter);
           }
         });
+        console.log(innerfilteredData);
+        return innerfilteredData;
       });
+      console.log(filteredData);
     }
   };
 
@@ -110,7 +115,7 @@ class PathsList extends Component {
           type="text"
           name="title"
           placeholder="Search..."
-          onChange={this.handleChande}
+          onChange={this.handleChange}
           style={{ marginBottom: '15px' }}
         />
         {/* <FontAwesomeIcon icon="search" size="1x" /> */}

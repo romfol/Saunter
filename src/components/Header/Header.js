@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'reactstrap';
+import { Button, Container, Row, Col } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import ModalWindow from '../ModalWindow/ModalWindow';
@@ -22,15 +22,20 @@ class Header extends Component {
   render() {
     return (
       <header>
-        <div>
-          <FontAwesomeIcon icon="walking" size="3x" />
-
-          <span>Saunter</span>
-        </div>
-        <Button onClick={this.toggleModal} color="success" size="lg">
-          Add Path
-        </Button>
-        <ModalWindow modal={this.state.modal} toggle={this.toggleModal} />
+        <Container>
+          <Row>
+            <Col xs="12" sm="6" style={{ textAlign: 'center' }}>
+              <FontAwesomeIcon icon="walking" size="3x" />
+              <span id="main-title">Saunter</span>
+            </Col>
+            <Col xs="12" sm="6" style={{ textAlign: 'center' }}>
+              <Button onClick={this.toggleModal} color="success" size="lg" id="add-path">
+                Add Path
+              </Button>
+              <ModalWindow modal={this.state.modal} toggle={this.toggleModal} />
+            </Col>
+          </Row>
+        </Container>
       </header>
     );
   }
