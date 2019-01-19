@@ -1,15 +1,11 @@
 header { 
-  margin: 25px 80px ;
+  margin: 25px 60px ;
   border-bottom: 1px solid grey;
 }
 
  #main-title {
   font-size: 40px;
   margin: 20px
-}
-
-button {
-  margin: 5px;
 }
 
 #add-path {

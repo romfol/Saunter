@@ -20,7 +20,7 @@
 
 .liContainer {
   overflow-y: auto;
-  height: 820px;
+  height: 600px;
   list-style-type: none;
   padding: 0;
 }

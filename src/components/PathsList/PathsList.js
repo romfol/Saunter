@@ -7,8 +7,7 @@ import './styles.css';
 
 class PathsList extends Component {
   state = {
-    data: {},
-    filtered: {},
+    filteredMatchedIds: [],
   };
 
   componentDidMount() {
@@ -18,7 +17,7 @@ class PathsList extends Component {
   }
 
   static getDerivedStateFromProps = props => ({
-    data: props.data,
+    //data: props.data,
   });
 
   transferData(id, title, distance, description, from, to, waypoints) {
@@ -27,36 +26,44 @@ class PathsList extends Component {
 
   handleChange = e => {
     if (e.target.value !== '') {
-      const currentData = this.state.data;
+      const currentData = this.props.data;
+
       const filteredData = Object.keys(currentData).filter(id => {
         const path = currentData[id];
         const innerfilteredData = Object.keys(path).filter(id => {
           if (id === 'title' || id === 'fullDescription') {
             const pathData = path[id];
-            console.log(pathData);
             const lc = pathData.toLowerCase();
             const filter = e.target.value.toLowerCase();
-            console.log(lc.includes(filter));
-            return lc.includes(filter);
+            if (lc.includes(filter)) {
+              return true;
+            }
           }
         });
-        console.log(innerfilteredData);
-        return innerfilteredData;
+        return innerfilteredData.length > 0;
       });
-      console.log(filteredData);
+      this.setState({
+        filteredMatchedIds: filteredData,
+      });
     }
   };
 
   render() {
-    const data = this.state.data;
+    const data = this.props.data;
     const favs = this.props.favourites;
     console.log('data to list: ', data);
     if (data === null) {
       return <span>No data</span>;
     }
 
-    const dataList = Object.keys(data).map(id => {
-      const path = data[id];
+    console.log('111: ', this.state.filteredMatchedIds);
+    let pathsOutput = Object.keys(data);
+    if (this.state.filteredMatchedIds.length > 0) {
+      pathsOutput = this.state.filteredMatchedIds;
+    } else pathsOutput = Object.keys(data);
+
+    const dataList = pathsOutput.map(id => {
+      let path = data[id];
 
       let favClass = 'fave';
       if (favs === null || !Object.keys(favs).includes(id)) {
