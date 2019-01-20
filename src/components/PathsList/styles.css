@@ -1,6 +1,13 @@
-.alert-success:active {
+li {
+  padding: 10px 0 5px ;
+  background:#D4EDDA;
+  margin: 5px 0;
+}
+
+li:active {
+  position: relative;
   top: 5px;
-  background-color: cyan
+  background: cyan
 }
 
 .title {
@@ -19,6 +26,8 @@
 }
 
 .liContainer {
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   height: 600px;
   list-style-type: none;
@@ -28,9 +37,14 @@
 .fave {
   color : gold;
   margin-right: 10px
-  
 }
 
 .not-fave {
   display: none
 }
+
+/* li:nth-child(x) {
+  background: red;
+  order: -1;
+}  */
+

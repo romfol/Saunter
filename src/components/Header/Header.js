@@ -10,12 +10,28 @@ class Header extends Component {
     super(props);
     this.state = {
       modal: false,
+      nestedModal: false,
+      closeAll: false,
     };
   }
 
   toggleModal = () => {
     this.setState({
       modal: !this.state.modal,
+    });
+  };
+
+  toggleNested = () => {
+    this.setState({
+      nestedModal: !this.state.nestedModal,
+      closeAll: false,
+    });
+  };
+
+  toggleAll = () => {
+    this.setState({
+      nestedModal: !this.state.nestedModal,
+      closeAll: true,
     });
   };
 

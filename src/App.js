@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'reactstrap';
 import { Header } from './components/Header/Header';
 import PathsList from './components/PathsList/PathsList';
 import PathData from './components/PathData/PathData';
+import './App.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faMapMarkedAlt,
@@ -39,7 +40,7 @@ const App = () => {
           <Col xs="12" lg="6">
             <PathsList />
           </Col>
-          <Col xs="12" lg="6" style={{ borderLeft: '1px solid grey' }}>
+          <Col xs="12" lg="6" className="right-col">
             <PathData />
           </Col>
         </Row>

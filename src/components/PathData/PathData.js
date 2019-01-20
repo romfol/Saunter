@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
 import ShowPath from '../ShowPath/ShowPath';
 import { deletePath, addToFavourites } from '../../actions';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './styles.css';
 
 class PathData extends Component {
@@ -26,14 +26,14 @@ class PathData extends Component {
     if (!path.title || this.state.deleted) {
       return (
         <div style={{ marginTop: '30px', textAlign: 'center' }}>
-          <FontAwesomeIcon
+          {/* <FontAwesomeIcon
             icon="long-arrow-alt-left"
             size="4x"
             style={{ color: 'green', position: 'absolute', top: '30px' }}
-          />
-          <span style={{ position: 'relative', left: '70px' }}>Select path </span>
+          /> */}
+          <span style={{ position: 'relative', left: '70px' }}>Select or add path </span>
         </div>
-      );
+      ); //
     } else
       return (
         <div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPaths, fetchFavs, transferSelectedData } from '../../actions';
-import { Alert, Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Search from '../Search/Search';
 import './styles.css';
@@ -24,11 +24,16 @@ class PathsList extends Component {
   render() {
     const data = this.props.data;
     const favs = this.props.favourites;
-    console.log(this.state);
+
     if (data === null) {
-      return <span>No data 
-        <FontAwesomeIcon icon="frown" size="1x" style={{ marginLeft: '10px' }} />
-        </span>
+      return (
+        <div style={{ textAlign: 'center' }}>
+          <span>
+            No data
+            <FontAwesomeIcon icon="frown" size="1x" style={{ marginLeft: '10px' }} />
+          </span>
+        </div>
+      );
     }
 
     let pathsOutput = Object.keys(data);
@@ -56,13 +61,19 @@ class PathsList extends Component {
       pathsOutput = this.state.filteredMatchedIds;
     }
 
-    const dataList = pathsOutput.map(id => {
+    const dataList = pathsOutput.map((id, index) => {
       let path = data[id];
-
+      console.log(index);
       let favClass = 'fave';
+      let ss = 'fave-order';
       if (favs === null || !Object.keys(favs).includes(id)) {
         favClass = 'not-fave';
+        ss = 'not-fave-order';
       }
+
+      // const styles= {
+      //   background: 'red'
+      // }
 
       return (
         <li
@@ -78,34 +89,29 @@ class PathsList extends Component {
             )
           }
           key={id}
+          // style={styles}
         >
-          <Alert color="success" style={{ padding: '10px 0 5px ' }}>
-            <Container>
-              <Row>
-                <Col xs="2">
-                  <FontAwesomeIcon icon="map-marked-alt" size="2x" style={{ color: '3370cc' }} />
-                </Col>
+          <Container>
+            <Row>
+              <Col xs="2">
+                <FontAwesomeIcon icon="map-marked-alt" size="2x" style={{ color: 'grey' }} />
+              </Col>
 
-                <Col xs="7">
-                  <div className="title">
-                    <FontAwesomeIcon icon="star" size="2x" className={favClass} />
-                    {path.title.toUpperCase()}
-                  </div>
-                  <div className="shortDesc">{path.shortDescription}</div>
-                </Col>
-                <Col xs="2" style={{ fontSize: '15px', padding: '0' }}>
-                  {path.totalDistance} km
-                </Col>
-                <Col xs="1" style={{ padding: '5px' }}>
-                  <FontAwesomeIcon
-                    icon="arrow-circle-right"
-                    size="2x"
-                    style={{ color: '3370cc' }}
-                  />
-                </Col>
-              </Row>
-            </Container>
-          </Alert>
+              <Col xs="7">
+                <div className="title">
+                  <FontAwesomeIcon icon="star" size="1x" className={favClass} />
+                  {path.title.toUpperCase()}
+                </div>
+                <div className="shortDesc">{path.shortDescription}</div>
+              </Col>
+              <Col xs="2" style={{ fontSize: '15px', padding: '0' }}>
+                {path.totalDistance} km
+              </Col>
+              <Col xs="1" style={{ padding: '5px' }}>
+                <FontAwesomeIcon icon="arrow-circle-right" size="2x" style={{ color: '3370cc' }} />
+              </Col>
+            </Row>
+          </Container>
         </li>
       );
     });
