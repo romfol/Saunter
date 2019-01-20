@@ -15,7 +15,7 @@ class Header extends Component {
     };
   }
 
-  toggleModal = () => {
+  toggle = () => {
     this.setState({
       modal: !this.state.modal,
     });
@@ -45,10 +45,17 @@ class Header extends Component {
               <span id="main-title">Saunter</span>
             </Col>
             <Col xs="12" sm="6" style={{ textAlign: 'center', padding: '0' }}>
-              <Button onClick={this.toggleModal} color="success" size="lg" id="add-path">
+              <Button onClick={this.toggle} color="success" size="lg" id="add-path">
                 Add Path
               </Button>
-              <ModalWindow modal={this.state.modal} toggle={this.toggleModal} />
+              <ModalWindow
+                modal={this.state.modal}
+                nestedModal={this.state.nestedModal}
+                closeAll={this.state.closeAll}
+                toggle={this.toggle}
+                toggleNested={this.toggleNested}
+                toggleAll={this.toggleAll}
+              />
             </Col>
           </Row>
         </Container>

@@ -12,6 +12,7 @@ import {
   Row,
   Col,
   FormText,
+  ModalFooter,
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Map from '../Map/Map';
@@ -29,16 +30,7 @@ class ModalWindow extends Component {
     totalDistance: 0,
   };
 
-  handleChange = e => {
-    const name = e.target.name;
-    const value = e.target.value;
-    this.setState({ [name]: value });
-  };
-
-  submitForm = e => {
-    e.preventDefault();
-    this.props.toggle();
-    this.props.addPath(this.state);
+  clearState = () => {
     this.setState({
       title: '',
       shortDescription: '',
@@ -48,6 +40,17 @@ class ModalWindow extends Component {
       toPoint: '',
       waypoints: [],
     });
+  };
+
+  handleChange = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({ [name]: value });
+  };
+
+  submitForm = e => {
+    e.preventDefault();
+    this.props.addPath(this.state);
   };
 
   render() {
@@ -109,13 +112,47 @@ class ModalWindow extends Component {
                       />
                       Length: {this.state.totalDistance} km
                     </span>
-                    <Button type="submit" outline color="success" style={{ margin: '10px' }}>
+                    <Button
+                      onClick={this.props.toggleNested}
+                      type="submit"
+                      outline
+                      color="success"
+                      style={{ margin: '10px' }}
+                    >
                       <FontAwesomeIcon
                         icon="check"
                         style={{ marginRight: '10px', color: 'green' }}
                       />
                       Add path
                     </Button>
+                    <Modal
+                      isOpen={this.props.nestedModal}
+                      toggle={this.props.toggleNested}
+                      onClosed={this.props.closeAll ? this.props.toggle : undefined}
+                    >
+                      <ModalHeader>New path added with such data:</ModalHeader>
+                      <ModalBody>
+                        <div>Title: {this.state.title}</div>
+                        <div style={{ wordWrap: 'break-word' }}>
+                          Short description: {this.state.shortDescription}
+                        </div>
+                        <div style={{ wordWrap: 'break-word' }}>
+                          Fll description: {this.state.fullDescription}
+                        </div>
+                        <div>Total distance: {this.state.totalDistance} km</div>
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button
+                          color="primary"
+                          onClick={() => {
+                            this.props.toggleAll();
+                            this.clearState();
+                          }}
+                        >
+                          Okey
+                        </Button>
+                      </ModalFooter>
+                    </Modal>
                   </div>
                 </Form>
               </ModalBody>
