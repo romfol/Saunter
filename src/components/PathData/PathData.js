@@ -9,7 +9,7 @@ import './styles.css';
 class PathData extends Component {
   state = { deleted: false }; //for rerender
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.transfered.id !== this.props.transfered.id) {
       this.setState({ deleted: false });
     }
@@ -31,9 +31,9 @@ class PathData extends Component {
             size="4x"
             style={{ color: 'green', position: 'absolute', top: '30px' }}
           /> */}
-          <span style={{ position: 'relative', left: '70px' }}>Select or add path </span>
+          <span> Select or add path </span>
         </div>
-      ); //
+      );
     } else
       return (
         <div>

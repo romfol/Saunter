@@ -65,15 +65,10 @@ class PathsList extends Component {
       let path = data[id];
       console.log(index);
       let favClass = 'fave';
-      let ss = 'fave-order';
+
       if (favs === null || !Object.keys(favs).includes(id)) {
         favClass = 'not-fave';
-        ss = 'not-fave-order';
       }
-
-      // const styles= {
-      //   background: 'red'
-      // }
 
       return (
         <li
@@ -89,7 +84,6 @@ class PathsList extends Component {
             )
           }
           key={id}
-          // style={styles}
         >
           <Container>
             <Row>
