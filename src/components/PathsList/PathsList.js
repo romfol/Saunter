@@ -8,6 +8,7 @@ import './styles.css';
 class PathsList extends Component {
   state = {
     filteredMatchedIds: [],
+    value: '',
   };
 
   componentDidMount() {
@@ -16,21 +17,22 @@ class PathsList extends Component {
     this.props.fetchFavs();
   }
 
-  static getDerivedStateFromProps = props => ({
-    //data: props.data,
-  });
+  // static getDerivedStateFromProps = (props, state) => {
+  //   console.log(state.value);
+  //   data: props.data,
+  // };
 
   transferData(id, title, distance, description, from, to, waypoints) {
     this.props.transferSelectedData(id, title, distance, description, from, to, waypoints);
   }
 
   handleChange = e => {
-    if (e.target.value !== '') {
+    this.setState({ value: e.target.value });
+    if (e.target.value) {
       const currentData = this.props.data;
-
-      const filteredData = Object.keys(currentData).filter(id => {
+      const filteredMatchedIds = Object.keys(currentData).filter(id => {
         const path = currentData[id];
-        const innerfilteredData = Object.keys(path).filter(id => {
+        const filteredData = Object.keys(path).filter(id => {
           if (id === 'title' || id === 'fullDescription') {
             const pathData = path[id];
             const lc = pathData.toLowerCase();
@@ -40,10 +42,10 @@ class PathsList extends Component {
             }
           }
         });
-        return innerfilteredData.length > 0;
+        return filteredData.length > 0;
       });
       this.setState({
-        filteredMatchedIds: filteredData,
+        filteredMatchedIds,
       });
     }
   };
@@ -51,16 +53,23 @@ class PathsList extends Component {
   render() {
     const data = this.props.data;
     const favs = this.props.favourites;
-    console.log('data to list: ', data);
+
     if (data === null) {
       return <span>No data</span>;
     }
 
-    console.log('111: ', this.state.filteredMatchedIds);
     let pathsOutput = Object.keys(data);
-    if (this.state.filteredMatchedIds.length > 0) {
+    if (this.state.value) {
+      if (this.state.filteredMatchedIds.length === 0) {
+        return (
+          <span>
+            Nothing was found due to request
+            <FontAwesomeIcon icon="frown" size="1x" style={{ marginLeft: '10px' }} />
+          </span>
+        );
+      }
       pathsOutput = this.state.filteredMatchedIds;
-    } else pathsOutput = Object.keys(data);
+    }
 
     const dataList = pathsOutput.map(id => {
       let path = data[id];
@@ -68,7 +77,7 @@ class PathsList extends Component {
       let favClass = 'fave';
       if (favs === null || !Object.keys(favs).includes(id)) {
         favClass = 'not-fave';
-      } else favClass = 'fave';
+      }
 
       return (
         <li
@@ -123,6 +132,7 @@ class PathsList extends Component {
           name="title"
           placeholder="Search..."
           onChange={this.handleChange}
+          value={this.state.value}
           style={{ marginBottom: '15px' }}
         />
         {/* <FontAwesomeIcon icon="search" size="1x" /> */}

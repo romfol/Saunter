@@ -16,7 +16,6 @@ class PathData extends Component {
   }
 
   handleDeletePath(id) {
-    console.log(this.state, this.props);
     this.props.deletePath(id);
     this.setState({ deleted: true });
   }
@@ -32,7 +31,7 @@ class PathData extends Component {
             size="4x"
             style={{ color: 'green', position: 'absolute', top: '30px' }}
           />
-          <span style={{ fontSize: '40px', position: 'relative', left: '70px' }}>Select path </span>
+          <span style={{ position: 'relative', left: '70px' }}>Select path </span>
         </div>
       );
     } else

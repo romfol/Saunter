@@ -44,6 +44,9 @@ class ModalWindow extends Component {
       shortDescription: '',
       fullDescription: '',
       totalDistance: 0,
+      fromPoint: '',
+      toPoint: '',
+      waypoints: [],
     });
   };
 
@@ -99,7 +102,7 @@ class ModalWindow extends Component {
                     />
                   </FormGroup>
                   <div style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: '25px', display: 'block' }}>
+                    <span style={{ fontSize: '25px', display: 'block', margin: '15px' }}>
                       <FontAwesomeIcon
                         icon="route"
                         style={{ marginRight: '15px', color: '#73B9FF' }}
