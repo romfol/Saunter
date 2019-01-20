@@ -1,71 +1,56 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPaths, fetchFavs, transferSelectedData } from '../../actions';
-import { Alert, Container, Row, Col, Input } from 'reactstrap';
+import { Alert, Container, Row, Col } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Search from '../Search/Search';
 import './styles.css';
 
 class PathsList extends Component {
   state = {
-    filteredMatchedIds: [],
     value: '',
+    filteredMatchedIds: [],
   };
 
   componentDidMount() {
     this.props.fetchPaths();
-    this.setState({ data: this.props.data });
     this.props.fetchFavs();
   }
-
-  // static getDerivedStateFromProps = (props, state) => {
-  //   console.log(state.value);
-  //   data: props.data,
-  // };
 
   transferData(id, title, distance, description, from, to, waypoints) {
     this.props.transferSelectedData(id, title, distance, description, from, to, waypoints);
   }
 
-  handleChange = e => {
-    this.setState({ value: e.target.value });
-    if (e.target.value) {
-      const currentData = this.props.data;
-      const filteredMatchedIds = Object.keys(currentData).filter(id => {
-        const path = currentData[id];
-        const filteredData = Object.keys(path).filter(id => {
-          if (id === 'title' || id === 'fullDescription') {
-            const pathData = path[id];
-            const lc = pathData.toLowerCase();
-            const filter = e.target.value.toLowerCase();
-            if (lc.includes(filter)) {
-              return true;
-            }
-          }
-        });
-        return filteredData.length > 0;
-      });
-      this.setState({
-        filteredMatchedIds,
-      });
-    }
-  };
-
   render() {
     const data = this.props.data;
     const favs = this.props.favourites;
-
+    console.log(this.state);
     if (data === null) {
-      return <span>No data</span>;
+      return <span>No data 
+        <FontAwesomeIcon icon="frown" size="1x" style={{ marginLeft: '10px' }} />
+        </span>
     }
 
     let pathsOutput = Object.keys(data);
     if (this.state.value) {
       if (this.state.filteredMatchedIds.length === 0) {
         return (
-          <span>
-            Nothing was found due to request
-            <FontAwesomeIcon icon="frown" size="1x" style={{ marginLeft: '10px' }} />
-          </span>
+          <>
+            <Search
+              transferInput={(value, filteredMatchedIds) =>
+                this.setState({
+                  value,
+                  filteredMatchedIds,
+                })
+              }
+              value={this.state.value}
+              filteredMatchedIds={this.state.filteredMatchedIds}
+            />
+            <span>
+              Nothing was found due to request
+              <FontAwesomeIcon icon="frown" size="1x" style={{ marginLeft: '10px' }} />
+            </span>
+          </>
         );
       }
       pathsOutput = this.state.filteredMatchedIds;
@@ -127,15 +112,17 @@ class PathsList extends Component {
 
     return (
       <>
-        <Input
-          type="text"
-          name="title"
-          placeholder="Search..."
-          onChange={this.handleChange}
-          value={this.state.value}
-          style={{ marginBottom: '15px' }}
-        />
         {/* <FontAwesomeIcon icon="search" size="1x" /> */}
+        <Search
+          transferInput={(value, filteredMatchedIds) =>
+            this.setState({
+              value,
+              filteredMatchedIds,
+            })
+          }
+          value={this.state.value}
+          filteredMatchedIds={this.state.filteredMatchedIds}
+        />
         <ul className="liContainer">{dataList}</ul>
       </>
     );
