@@ -21,11 +21,13 @@ class Header extends Component {
     });
   };
 
-  toggleNested = () => {
-    this.setState({
-      nestedModal: !this.state.nestedModal,
-      closeAll: false,
-    });
+  toggleNested = title => {
+    if (title !== '') {
+      this.setState({
+        nestedModal: !this.state.nestedModal,
+        closeAll: false,
+      });
+    }
   };
 
   toggleAll = () => {

@@ -113,7 +113,7 @@ class ModalWindow extends Component {
                       Length: {this.state.totalDistance} km
                     </span>
                     <Button
-                      onClick={this.props.toggleNested}
+                      onClick={()=>this.props.toggleNested(this.state.title)}
                       type="submit"
                       outline
                       color="success"
