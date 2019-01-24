@@ -113,7 +113,7 @@ class ModalWindow extends Component {
                       Length: {this.state.totalDistance} km
                     </span>
                     <Button
-                      onClick={()=>this.props.toggleNested(this.state.title)}
+                      onClick={() => this.props.toggleNested(this.state.title)}
                       type="submit"
                       outline
                       color="success"
@@ -132,14 +132,27 @@ class ModalWindow extends Component {
                     >
                       <ModalHeader>New path added with such data:</ModalHeader>
                       <ModalBody>
-                        <div>Title: {this.state.title}</div>
-                        <div style={{ wordWrap: 'break-word' }}>
-                          Short description: {this.state.shortDescription}
+                        <div>
+                          <span style={{ fontSize: '20px' }}>Title: </span>
+                          {this.state.title}
                         </div>
-                        <div style={{ wordWrap: 'break-word' }}>
-                          Fll description: {this.state.fullDescription}
+                        <div>
+                          <span style={{ fontSize: '20px', wordWrap: 'break-word' }}>
+                            Short description:{' '}
+                          </span>
+                          {this.state.shortDescription}
                         </div>
-                        <div>Total distance: {this.state.totalDistance} km</div>
+                        <div>
+                          <span style={{ fontSize: '20px', wordWrap: 'break-word' }}>
+                            {' '}
+                            Full description:{' '}
+                          </span>
+                          {this.state.fullDescription}
+                        </div>
+                        <div>
+                          <span style={{ fontSize: '20px' }}>Total distance: </span>
+                          {this.state.totalDistance} km
+                        </div>
                       </ModalBody>
                       <ModalFooter>
                         <Button

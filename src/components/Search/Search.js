@@ -8,7 +8,7 @@ class Search extends Component {
     value: '',
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevState) {
     if (prevState.value !== this.state.value) {
       this.props.transferInput(this.state.value, this.state.filteredMatchedIds);
     }

@@ -25,7 +25,7 @@ class PathData extends Component {
 
     if (!path.title || this.state.deleted) {
       return (
-        <div style={{ marginTop: '30px', textAlign: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
           {/* <FontAwesomeIcon
             icon="long-arrow-alt-left"
             size="4x"

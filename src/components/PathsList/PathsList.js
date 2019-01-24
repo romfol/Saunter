@@ -63,9 +63,8 @@ class PathsList extends Component {
 
     const dataList = pathsOutput.map((id, index) => {
       let path = data[id];
-      console.log(index);
-      let favClass = 'fave';
 
+      let favClass = 'fave';
       if (favs === null || !Object.keys(favs).includes(id)) {
         favClass = 'not-fave';
       }
