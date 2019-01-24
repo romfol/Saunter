@@ -15,24 +15,19 @@ class Search extends Component {
   }
 
   handleChange = e => {
-    this.setState({ value: e.target.value });
+    const value = e.target.value;
+    this.setState({ value });
 
-    if (e.target.value) {
+    if (value) {
       const currentData = this.props.data;
       const filteredMatchedIds = Object.keys(currentData).filter(id => {
         const path = currentData[id];
-        const filteredData = Object.keys(path).filter(id => {
-          if (id === 'title' || id === 'fullDescription') {
-            const pathData = path[id];
-            const lc = pathData.toLowerCase();
-            const filter = e.target.value.toLowerCase();
-            if (lc.includes(filter)) {
-              return true;
-            }
-          }
-          return null;
-        });
-        return filteredData.length > 0;
+        if (
+          path.title.toLowerCase().includes(value.toLowerCase()) ||
+          path.fullDescription.toLowerCase().includes(value.toLowerCase())
+        ) {
+          return true;
+        } else return false;
       });
       this.setState({
         filteredMatchedIds,
