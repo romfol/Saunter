@@ -15,19 +15,17 @@ class Search extends Component {
   }
 
   handleChange = e => {
-    const value = e.target.value;
+    const { value } = e.target;
     this.setState({ value });
 
     if (value) {
       const currentData = this.props.data;
       const filteredMatchedIds = Object.keys(currentData).filter(id => {
         const path = currentData[id];
-        if (
+        return (
           path.title.toLowerCase().includes(value.toLowerCase()) ||
           path.fullDescription.toLowerCase().includes(value.toLowerCase())
-        ) {
-          return true;
-        } else return false;
+        );
       });
       this.setState({
         filteredMatchedIds,
